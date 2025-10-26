@@ -8,32 +8,70 @@ import platzi.play.util.ScannerUtils;
 public class Main {
     public static final String NOMBRE_PLATAFORMA = "Platzi PLAY ";
     public static final String VERSION = "1.0.0";
+    public static final int AGREGAR_CONTENIDO = 1;
+    public static final int MOSTRAR_TITULOS = 2;
+    public static final int BUSCAR_POR_TITULO = 3;
+    public static final int ELIMINAR_CONTENIDO = 4;
+    public static final int SALIR = 5;
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE_PLATAFORMA);
         System.out.println(NOMBRE_PLATAFORMA + "v" + VERSION);
 
-        String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
-        String genero = ScannerUtils.capturarTexto("Género del contenido");
-        int duracion = ScannerUtils.capturarNumero("Duración en minutos");
-        double calificacion = ScannerUtils.capturarDecimal("Calificación del contenido");
+        cargarPeliculas(plataforma);
 
+        while (true){
+            int opcionElegida = ScannerUtils.capturarNumero(
+                   """
+                    Selecciona una opción:
+                    1. Agregar contenido a la plataforma
+                    2. Mostrar los títulos disponibles
+                    3. Buscar por título
+                    4. Eliminar contenido de la plataforma
+                    5. Salir
+                    """);
 
-        Pelicula pelicula = new Pelicula(nombre, duracion, genero, calificacion);
-        Pelicula pelicula2 = new Pelicula("Titanic", 210, "Romance", 4.5);
-        pelicula.getTitulo();
-        pelicula2.getTitulo();
+            switch (opcionElegida){
+                case AGREGAR_CONTENIDO -> {
+                    String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
+                    String genero = ScannerUtils.capturarTexto("Género del contenido");
+                    int duracion = ScannerUtils.capturarNumero("Duración en minutos");
+                    double calificacion = ScannerUtils.capturarDecimal("Calificación del contenido");
 
-        plataforma.agregar(pelicula);
-        plataforma.agregar(pelicula2);
-        System.out.println("Numero de elementos en la plataforma " + plataforma.getContenido().size());
-        plataforma.eliminar(pelicula2);
-        plataforma.mostrarTitulos();
+                    plataforma.agregar(new Pelicula(nombre, duracion, genero, calificacion));
+                    System.out.println("Contenido agregado correctamente.");
+                }
+                case MOSTRAR_TITULOS -> plataforma.mostrarTitulos();
+                case BUSCAR_POR_TITULO -> {
+                    String nombreBuscado = ScannerUtils.capturarTexto("Nombre del contenido a buscar");
+                    Pelicula pelicula = plataforma.buscarPorTitulo(nombreBuscado);
 
-        Usuario usuario = new Usuario("Jorge", "email@gmail.com");
+                    if(pelicula != null){
+                        System.out.println(pelicula.obtenerFichaTecnica());
+                    } else{
+                        System.out.println(nombreBuscado + " no existe dentro de " + plataforma.getNombre());
+                    }
+                }
+                case ELIMINAR_CONTENIDO -> {
 
-        //también puede ser
-        //usuario.fechaRegistro = LocalDateTime.of(2025, 12, 23, 17, 15, 19);
-        usuario.ver(pelicula);
+                }
+                case SALIR -> {
+                    System.out.println("Gracias por usar " + NOMBRE_PLATAFORMA);
+                    System.exit(0);
+                }
+            }
+        }
+    }
+    private static void cargarPeliculas(Plataforma plataforma){
+        plataforma.agregar(new Pelicula("The Batman", 180, "Acción", 4.5));
+        plataforma.agregar(new Pelicula("Soul", 120, "Animación", 4.8));
+        plataforma.agregar(new Pelicula("El Señor de los Anillos", 200, "Fantasía", 4.9));
+        plataforma.agregar(new Pelicula("Harry Potter", 150, "Fantasía", 4.7));
+        plataforma.agregar(new Pelicula("Toy Story", 90, "Animación", 4.6));
+        plataforma.agregar(new Pelicula("Inception", 160, "Ciencia Ficción", 4.4));
+        plataforma.agregar(new Pelicula("Avatar", 162, "Ciencia Ficción", 4.3));
+        plataforma.agregar(new Pelicula("Titanic", 195, "Romance", 4.2));
+        plataforma.agregar(new Pelicula("Gladiador", 155, "Acción", 4.1));
+        plataforma.agregar(new Pelicula("Forrest Gump", 142, "Drama", 4.0));
     }
 }
 

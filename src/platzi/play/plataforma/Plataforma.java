@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Plataforma {
     private String nombre;
-    private List<Pelicula> contenido;
+    private List<Pelicula> contenido; // relacion de agregacion
 
     public Plataforma(String nombre){
         this.nombre = nombre;
@@ -28,6 +28,14 @@ public class Plataforma {
         this.contenido.remove(elemento);
     }
 
+    public Pelicula buscarPorTitulo(String titulo){
+        for(Pelicula pelicula: contenido){
+            if(pelicula.getTitulo().equalsIgnoreCase(titulo)){
+                return pelicula;
+            }
+        }
+        return null;
+    }
 
     public String getNombre() {
         return nombre;
