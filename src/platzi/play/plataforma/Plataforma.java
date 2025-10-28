@@ -18,10 +18,10 @@ public class Plataforma {
         this.contenido.add(elemento);
     }
 
-    public void mostrarTitulos(){
-        for (Pelicula pelicula : contenido) {
-            System.out.println(pelicula.getTitulo());
-        }
+    public List<String> getTitulos(){
+        return contenido.stream()
+                .map(Pelicula::getTitulo)
+                .toList();
     }
 
     public void eliminar(Pelicula elemento){
@@ -29,13 +29,21 @@ public class Plataforma {
     }
 
     public Pelicula buscarPorTitulo(String titulo){
-        for(Pelicula pelicula: contenido){
-            if(pelicula.getTitulo().equalsIgnoreCase(titulo)){
-                return pelicula;
-            }
-        }
-        return null;
+        return contenido.stream()
+                .filter(contenido -> contenido.getTitulo().equalsIgnoreCase(titulo))
+                .findFirst()
+                .orElse(null);
     }
+
+     public List<Pelicula> buscarPorGenero(String genero){
+        return contenido.stream()
+                .filter( pelicula -> pelicula.getGenero().equalsIgnoreCase(genero))
+                .toList();
+     }
+
+     public int getDuracionTotal(){
+
+     }
 
     public String getNombre() {
         return nombre;
@@ -44,6 +52,7 @@ public class Plataforma {
     public List<Pelicula> getContenido() {
         return contenido;
     }
+
 }
 
 

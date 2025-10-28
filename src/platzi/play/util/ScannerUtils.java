@@ -28,7 +28,7 @@ public class ScannerUtils {
     public static double capturarDecimal(String mensaje){
         System.out.println(mensaje + ": ");
 
-        while (SCANNER.hasNextDouble()){
+        while (!SCANNER.hasNextDouble()){
             System.out.println("Dato no aceptado. " + mensaje + ": ");
             SCANNER.next();
         }
