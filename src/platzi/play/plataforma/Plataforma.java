@@ -1,8 +1,10 @@
 package platzi.play.plataforma;
 
+import platzi.play.contenido.Genero;
 import platzi.play.contenido.Pelicula;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Plataforma {
@@ -35,14 +37,36 @@ public class Plataforma {
                 .orElse(null);
     }
 
-     public List<Pelicula> buscarPorGenero(String genero){
+     public List<Pelicula> buscarPorGenero(Genero genero){
         return contenido.stream()
-                .filter( pelicula -> pelicula.getGenero().equalsIgnoreCase(genero))
+                .filter( pelicula -> pelicula.getGenero().equals(genero))
+                .toList();
+     }
+
+     public List<Pelicula> getPopulares(int cantidad){
+        return contenido.stream()
+                .sorted(Comparator.comparingDouble(Pelicula::getCalificacion).reversed())
+                .limit(cantidad)
+                .filter(Pelicula::esPopular)
                 .toList();
      }
 
      public int getDuracionTotal(){
+            return contenido.stream()
+                    .mapToInt(Pelicula::getDuracion)
+                    .sum();
+     }
 
+     public Pelicula verLarga(){
+        return contenido.stream()
+                .max(Comparator.comparingInt(Pelicula::getDuracion))
+                .orElse(null);
+     }
+
+     public Pelicula verCorta(){
+        return contenido.stream()
+                .min(Comparator.comparingInt(Pelicula::getDuracion))
+                .orElse(null);
      }
 
     public String getNombre() {

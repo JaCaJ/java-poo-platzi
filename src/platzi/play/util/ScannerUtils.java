@@ -1,5 +1,7 @@
 package platzi.play.util;
 
+import platzi.play.contenido.Genero;
+
 import java.util.Scanner;
 
 public class ScannerUtils {
@@ -37,7 +39,51 @@ public class ScannerUtils {
         SCANNER.nextLine(); // Limpiar el buffer
         return dato;
     }
+
+    public static Genero capturarGenero(String mensaje){
+        while (true){
+            String entrada = capturarTexto(mensaje);
+            try{
+                return Genero.valueOf(entrada.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Dato no aceptado. " + mensaje);
+            }
+        }
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
