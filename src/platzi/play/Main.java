@@ -1,7 +1,10 @@
 package platzi.play;
 
+import platzi.play.contenido.Calidad;
 import platzi.play.contenido.Genero;
+import platzi.play.contenido.Idioma;
 import platzi.play.contenido.Pelicula;
+import platzi.play.exception.PeliculaExistenteException;
 import platzi.play.plataforma.Plataforma;
 import platzi.play.util.ScannerUtils;
 
@@ -45,10 +48,17 @@ public class Main {
                 case AGREGAR_CONTENIDO -> {
                     String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
                     Genero genero = ScannerUtils.capturarGenero("Género del contenido");
+                    Idioma idioma = ScannerUtils.capturarIdioma("Idioma del contenido");
                     int duracion = ScannerUtils.capturarNumero("Duración en minutos");
                     double calificacion = ScannerUtils.capturarDecimal("Calificación del contenido");
+                    Calidad calidad = ScannerUtils.capturarCalidad("Calidad del contenido: ");
 
-                    plataforma.agregar(new Pelicula(nombre, duracion, genero, calificacion));
+                     try{
+                        plataforma.agregar(new Pelicula(nombre, duracion, genero, idioma, calidad, calificacion));
+                     }catch (PeliculaExistenteException e){
+                         System.out.println(e.getMessage());
+                     }
+
                     System.out.println("Contenido agregado correctamente.");
                 }
                 case MOSTRAR_TITULOS -> {
@@ -66,7 +76,7 @@ public class Main {
                     }
                 }
                 case BUSCAR_POR_GENERO -> {
-                    Genero generoBuscado = Genero.valueOf(ScannerUtils.capturarTexto("Genero del contenido a buscar: "));
+                    Genero generoBuscado = ScannerUtils.capturarGenero("Género del contenido a buscar");
 
                     List<Pelicula> contenidoPorGenero = plataforma.buscarPorGenero(generoBuscado);
                     System.out.println(contenidoPorGenero.size() + " encontradas para el genero " + generoBuscado);
@@ -119,16 +129,16 @@ public class Main {
         }
     }
     private static void cargarPeliculas(Plataforma plataforma){
-        plataforma.agregar(new Pelicula("The Batman", 180, Genero.ACCION, 4.5));
-        plataforma.agregar(new Pelicula("Soul", 120, Genero.ANIMACION, 4.8));
-        plataforma.agregar(new Pelicula("El Señor de los Anillos", 200, Genero.DRAMA, 4.9));
-        plataforma.agregar(new Pelicula("Harry Potter", 150, Genero.DRAMA, 4.7));
-        plataforma.agregar(new Pelicula("Toy Story", 90, Genero.ANIMACION, 4.6));
-        plataforma.agregar(new Pelicula("Inception", 160, Genero.CIENCIA_FICCION, 4.4));
-        plataforma.agregar(new Pelicula("Avatar", 162, Genero.CIENCIA_FICCION, 4.3));
-        plataforma.agregar(new Pelicula("Titanic", 195, Genero.DRAMA, 4.2));
-        plataforma.agregar(new Pelicula("Gladiador", 155, Genero.ACCION, 4.1));
-        plataforma.agregar(new Pelicula("Forrest Gump", 142, Genero.DRAMA, 4.0));
+        plataforma.agregar(new Pelicula("The Batman", 180, Genero.ACCION, Idioma.CASTELLANO, Calidad.CUATRO_K,4.5));
+        plataforma.agregar(new Pelicula("Soul", 120, Genero.ANIMACION, Idioma.INGLES, Calidad.ULTRA_HD,4.8));
+        plataforma.agregar(new Pelicula("El Señor de los Anillos", 200, Genero.DRAMA, Idioma.GUARANI, Calidad.HD,4.9));
+        plataforma.agregar(new Pelicula("Harry Potter", 150, Genero.DRAMA, Idioma.JAPONES, Calidad.BAJA,4.7));
+        plataforma.agregar(new Pelicula("Toy Story", 90, Genero.ANIMACION, Idioma.CHINO, Calidad.CUATRO_K,4.6));
+        plataforma.agregar(new Pelicula("Inception", 160, Genero.CIENCIA_FICCION, Idioma.COREANO, Calidad.ULTRA_HD,4.4));
+        plataforma.agregar(new Pelicula("Avatar", 162, Genero.CIENCIA_FICCION, Idioma.CASTELLANO, Calidad.HD,4.3));
+        plataforma.agregar(new Pelicula("Titanic", 195, Genero.DRAMA, Idioma.INGLES, Calidad.BAJA,4.2));
+        plataforma.agregar(new Pelicula("Gladiador", 155, Genero.ACCION, Idioma.GUARANI, Calidad.CUATRO_K,4.1));
+        plataforma.agregar(new Pelicula("Forrest Gump", 142, Genero.DRAMA, Idioma.JAPONES, Calidad.ULTRA_HD,4.0));
     }
 }
 

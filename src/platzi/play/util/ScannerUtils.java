@@ -1,6 +1,8 @@
 package platzi.play.util;
 
+import platzi.play.contenido.Calidad;
 import platzi.play.contenido.Genero;
+import platzi.play.contenido.Idioma;
 
 import java.util.Scanner;
 
@@ -42,11 +44,47 @@ public class ScannerUtils {
 
     public static Genero capturarGenero(String mensaje){
         while (true){
-            String entrada = capturarTexto(mensaje);
+            System.out.println(mensaje + "... Opciones: ");
+            for (Genero genero : Genero.values()){
+                System.out.println("- " + genero.name());
+            }
+            System.out.println("Cuál quiere?");
+            String entrada = SCANNER.nextLine();
             try{
                 return Genero.valueOf(entrada.toUpperCase());
             } catch (IllegalArgumentException e) {
-                System.out.println("Dato no aceptado. " + mensaje);
+                System.out.println("Género no aceptado. ");
+            }
+        }
+    }
+    public static Idioma capturarIdioma(String mensaje){
+        while (true){
+            System.out.println(mensaje + "... Opciones: ");
+            for (Idioma idioma : Idioma.values()){
+                System.out.println("- " + idioma.name());
+            }
+            System.out.println("Cuál elige?");
+            String entrada = SCANNER.nextLine();
+            try{
+                return Idioma.valueOf(entrada.toUpperCase());
+            } catch (IllegalArgumentException e){
+                System.out.println("Idioma no válido. ");
+            }
+        }
+    }
+
+    public static Calidad capturarCalidad(String mensaje){
+        while (true){
+            System.out.println("... Opciones: ");
+            for(Calidad calidad : Calidad.values()){
+                System.out.println("- " + calidad.name());
+            }
+            System.out.println("Cuál elige? ");
+            String entrada = SCANNER.nextLine();
+            try{
+                return Calidad.valueOf(entrada.toUpperCase());
+            }catch (IllegalArgumentException e){
+                System.out.println("Calidad no válida. ");
             }
         }
     }
