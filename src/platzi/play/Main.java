@@ -19,6 +19,7 @@ public class Main {
     public static final int VER_CORTA = 7;
     public static final int ELIMINAR_CONTENIDO = 8;
     public static final int SALIR = 9;
+    public static final int PLAY = 10;
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE_PLATAFORMA);
         System.out.println(NOMBRE_PLATAFORMA + "v" + VERSION);
@@ -38,6 +39,7 @@ public class Main {
                     6. Ver película mas larga
                     7. Ver película mas corta
                     8. Eliminar contenido de la plataforma
+                    10. Reproducir
                     9. Salir
                     """);
 
@@ -116,6 +118,16 @@ public class Main {
                         System.out.println("Pelicula "+ pelicula.getTitulo() +" eliminada correctamente.");
                     } else{
                         System.out.println(peliculaAeliminar + " no existe dentro de " + plataforma.getNombre());
+                    }
+                }
+                case PLAY -> {
+                    String nombre = ScannerUtils.capturarTexto("Nombre del contenido a reproducir: ");
+                    Pelicula contenido = plataforma.buscarPorTitulo(nombre);
+
+                    if(contenido != null){
+                        plataforma.reproducir(contenido);
+                    } else {
+                        System.out.println(nombre + " no existe :( ");
                     }
                 }
                 case SALIR -> {
